@@ -1,12 +1,29 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math"
+)
 
 func main() {
 
-	var x int
-	fmt.Scan(&x)
-	fmt.Println(palindrome(x))
+	//var x int //this is to test palindrome
+	//fmt.Scan(&x) //scan a value
+	//fmt.Println(palindrome(x)) //check if palindrome works
+
+	//var count int = 999
+
+	//	for i := 999; i > 99; i-- {
+	//	check := count * i
+	//	if palindrome(count * i) {
+
+	//	} else {
+
+	//	}
+
+	//	}
+	reversePalindrome()
+
 	return
 }
 
@@ -37,4 +54,59 @@ func palindrome(numb int) bool {
 	} else {
 		return false
 	}
+}
+
+func reversePalindrome() {
+	var a, b, c int = 9, 9, 9
+
+	for a >= 0 {
+
+		for b >= 0 {
+
+			for c > 0 {
+				x := a*100001 + b*10010 + c*1100
+
+				var y, z int = checkFactor(x)
+
+				fmt.Println(y, z)
+
+				if y > 99 {
+					fmt.Println("The two factors are ", y, " and ", z, " and their product is ", x)
+					return
+				} else {
+
+				}
+				c--
+			}
+			b--
+			c = 9
+		}
+		a--
+		b = 9
+	}
+	return
+}
+
+func checkFactor(x int) (a, b int) {
+
+	var y, z int
+
+	conv := float64(x)
+
+	u := math.Sqrt(conv) + 1
+	y = int(u)
+
+	for y > 900 {
+
+		if x%y == 0 {
+			z = x / y
+			if z < 1000 && z > 99 {
+				return y, z
+			} else {
+			}
+		} else {
+		}
+		y--
+	}
+	return 0, 0
 }
