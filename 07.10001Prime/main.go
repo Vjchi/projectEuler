@@ -4,29 +4,36 @@ import "fmt"
 
 func main() {
 
-	var count, x int = 6, 15 //6th prime is 13, so start counting at 5 and testing at 13
+	var primeList = make([]int, 3, 4000)
+	primeList[0] = 2 //first two primes in the list
+	primeList[1] = 3 //otherwise it fucks up the program
+	primeList[2] = 5 //like, really badly
 
-	for i := 3; i < (x/3)+1; i++ { // testing each candidate x, starting by dividing by 2
-		if x%i == 0 { //if factor found
-			x += 2 //next x
-			i = 3  // re initialize i
+	var x int = 7 //following check is the next odd number after last prime
 
-		} else { //if factor not found
-			if i == x/3 { //and we are at half, no factor after
-				count++ //we found another prime, count it
+	for len(primeList) < 10001 {
 
-				if count == 10001 { //when 10001 prime is found
-					fmt.Println("The ", count, "th prime is ", x) //present result
-					return                                        //finish function
+		var i int = 0 //re intialize i
 
-				} else { //if not Prime No.10001
-					x += 2 //next x
-					i = 3  // re initialize i
+		for i < len(primeList) {
+			if x%primeList[i] == 0 { //if factor found
+				x += 2 //next x
+				break  //break the loop
+
+			} else { //if factor not found
+				if primeList[i] > x/3 { //and we are at third, no factor after
+					primeList = append(primeList, x) //we found another prime, append it
+					if len(primeList) == 10001 {
+						break //10001 we'll stop here
+					}
+					x += 2 //otherwise next odd number will be checked
+					break  //re initialize i
+				} else {
+					i++ //if we not a third, next i
 				}
-			} else { //next i factor to test
 			}
 		}
 	}
-	fmt.Println("The early ", count, "th prime is ", x)
+	fmt.Println("The early ", len(primeList), "th prime is ", x) //x-2 because x is incremented before end
 	return
 }
