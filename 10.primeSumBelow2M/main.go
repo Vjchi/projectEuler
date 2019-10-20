@@ -4,13 +4,11 @@ import "fmt"
 
 func main() { //testing the function for all below 1000 first
 
-	primeList := make([]int, 4, 400000) //initialize first 5 primes
+	primeList := make([]int, 2, 400000) //initialize first 5 primes
 	primeList[0] = 2
 	primeList[1] = 3
-	primeList[2] = 5
-	primeList[3] = 7
 
-	var x int = 9 //set x to start at next odd after last prime
+	var x int = 5 //set x to start at next odd after last prime
 
 	for x < 2000000 {
 
