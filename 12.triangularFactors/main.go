@@ -6,14 +6,18 @@ import (
 
 func main() {
 	var x int
-	fmt.Scan(&x)
+	var primeList = generatePrimeList()
 
-	primeList := generatePrimeList()
-
-	y := TriangularNo(x)
-	fmt.Println("The ", x, "th triangular number is ", y)
-	fmt.Println("And it has ", factorCount(y, primeList), " factors")
-
+	for x = 10000; x < 20000; x++ {
+		div := factorCount(TriangularNo(x), primeList)
+		if div >= 500 {
+			fmt.Println("The triangular number ", TriangularNo(x), " has ", div, "dividors")
+			fmt.Println("Also x is ", x)
+			break
+		} else {
+		}
+	}
+	fmt.Println("End of loop")
 	return
 }
 
