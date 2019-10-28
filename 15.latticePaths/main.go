@@ -2,10 +2,15 @@ package main
 
 import (
 	"fmt"
+	"math"
 )
 
 func main() {
-	fmt.Println("Hello World")
+	var count, i float64
 
+	for i = 0; i <= 20; i++ {
+		count += math.Pow(2, i)
+	}
+	fmt.Println(count)
 	return
 }
