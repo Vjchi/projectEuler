@@ -30,6 +30,5 @@ func main() {
 	for i := range primeList {       //for all the primes identified in primeList
 		primeMap[primeList[i]] = 0 //initialise an entry in the map to 0
 	} //now all the primes have a counter in the map
-
 	return
 }
