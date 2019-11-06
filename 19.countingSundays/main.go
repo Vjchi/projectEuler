@@ -4,13 +4,14 @@ import "fmt"
 
 func main() {
 
-	yr := 1904
+	var yr int
+	fmt.Scan(&yr)
 
 	for i := 0; i < 12; i++ {
 		fmt.Println(yr, " - ", i, " - ", (countPastYrs(yr)+countCurYr(yr, i))%7)
 	}
-	/*var counter int
-	for i := 1901; i <= 2001; i++ {
+	var counter int
+	for i := 1901; i < 2001; i++ {
 		pastYr := countPastYrs(i)
 		for j := 0; j < 12; j++ {
 			if (countCurYr(i, j)+pastYr)%7 == 0 {
@@ -18,7 +19,7 @@ func main() {
 			}
 		}
 	}
-	fmt.Println(counter)*/
+	fmt.Println(counter)
 	return
 }
 
@@ -43,6 +44,9 @@ func countCurYr(yr, month int) int {
 
 func countPastYrs(yr int) int {
 	y := yr*365 + yr/4 - yr/100 + yr/400
-	y -= dayOne
+	y -= dayOne                                  //remove everything before 1900
+	if yr%4 == 0 && yr%100 != 0 || yr%400 == 0 { //use the bisextile condition
+		y-- //to tweak the final result
+	}
 	return y
 }
