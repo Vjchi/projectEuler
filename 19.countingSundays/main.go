@@ -4,8 +4,10 @@ import "fmt"
 
 func main() {
 
+	yr := 1904
+
 	for i := 0; i < 12; i++ {
-		fmt.Println(i, " - ", (countPastYrs(1960)+countCurYr(1960, i))%7)
+		fmt.Println(yr, " - ", i, " - ", (countPastYrs(yr)+countCurYr(yr, i))%7)
 	}
 	/*var counter int
 	for i := 1901; i <= 2001; i++ {
