@@ -11,8 +11,10 @@ func main() {
 
 	if primeMapA[2] > primeMapA[5] {
 		primeMapA[2] -= primeMapA[5]
+		primeMapA[5] = 0
 	} else {
 		primeMapA[5] -= primeMapA[2]
+		primeMapA[2] = 0
 	}
 	fmt.Println(primeMapA)
 	return
