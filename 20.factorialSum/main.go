@@ -15,11 +15,10 @@ func main() {
 		primeMapA[5] -= primeMapA[2]
 		primeMapA[2] = 0
 	}
-	fmt.Println(primeMapA)
 
 	var count int
-	for i := range primeMapA {
-		count += primeMapA[i]
+	for range primeMapA {
+		count++
 	}
 
 	var primeSlA []int
@@ -30,39 +29,35 @@ func main() {
 		}
 	}
 	fmt.Println(primeSlA)
-
-	var numCnt []int = make([]int, 500, 500) //set our digit list
-
-	numCnt[0] = 1 //initialise it
+	var numCnt []int = make([]int, 130, 130) //set our digit list
+	numCnt[0] = 1                            //initialise it
 
 	for i := range primeSlA {
-
-		var remCnt []int = make([]int, 502, 502) //set our remainder list
-
+		var remCnt []int = make([]int, 132, 132) //set our remainder list
 		for j := range numCnt {
 			numCnt[j] = numCnt[j] * primeSlA[i] //multiply each digit by the prime
-			remCnt[j+2] = numCnt[j] / 100       //Store remainder >10
+			remCnt[j+2] = numCnt[j] / 100       //Store remainder >100
 			numCnt[j] = numCnt[j] % 100         //remove remainder part >100
 			remCnt[j+1] = numCnt[j] / 10        //Store remainder >10
 			numCnt[j] = numCnt[j] % 10          //Only keep unit digit
-		}
+		} //next j
 
-		for j := 0; j < 500; j++ { //now to associate remainder to counter
+		for j := 0; j < len(numCnt); j++ { //now to associate remainder to counter
 			numCnt[j] += remCnt[j] //add the remainder to our digit counter
-		}
+		} //next j
 
-		for j := 0; j < 498; j++ { //now to rearrange counter
+		for j := 0; j < len(numCnt)-2; j++ { //now to rearrange counter
 			numCnt[j+2] += numCnt[j] / 100 //add count >100
 			numCnt[j] = numCnt[j] % 100    //remove count part >100
 			numCnt[j+1] += numCnt[j] / 10  //add count >10
 			numCnt[j] = numCnt[j] % 10     //only keep singl digit
-		}
+		} //next j
 	} //by the end of it, we should have all the digits making 100!
 	var total int
 	for i := range numCnt {
 		total += numCnt[i]
 	}
-
+	fmt.Println(numCnt[0:130])
 	fmt.Println(total)
 
 	return
