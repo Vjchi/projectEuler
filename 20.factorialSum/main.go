@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"math"
 )
 
 func main() {
@@ -23,27 +22,26 @@ func main() {
 		count += primeMapA[i]
 	}
 
-	var primeSliceA []int
-	primeSliceA = make([]int, 0, count)
+	var primeSlA []int
+	primeSlA = make([]int, 0, count)
 	for i := range primeMapA {
 		for j := 0; j < primeMapA[i]; j++ {
-			primeSliceA = append(primeSliceA, i)
+			primeSlA = append(primeSlA, i)
 		}
 	}
-	fmt.Println(primeSliceA)
+	fmt.Println(primeSlA)
 
-	var lastDigit int = 1
-	for i := range primeSliceA {
-		lastDigit = (lastDigit * (primeSliceA[i] % 10)) % 10
+	var numCnt []int = make([]int, 5000, 5000)
+	var remCnt []int = make([]int, 5000, 5000)
+	numCnt[0], remCnt[0] = 1, 0
+	for i := range primeSlA {
+		for j := range numCnt {
+			numCnt[j] = numCnt[j] * primeSlA[i]
+			remCnt[j+2] = numCnt[j] / 100
+			remCnt[j+1] = numCnt[j] / 10
+			numCnt[j] = numCnt[j] % 10
+		}
 	}
-	fmt.Println(lastDigit)
-
-	var logSum float64
-	for i := range primeMapA {
-		log := math.Log10(float64(i))
-		logSum += float64(primeMapA[i]) * log
-	}
-	fmt.Println("Total Log10 is", logSum)
 
 	return
 }
