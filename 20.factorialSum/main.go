@@ -5,8 +5,18 @@ import (
 )
 
 func main() {
-	fmt.Println("Hello World")
-	primeMapA := factDecomp(1, 100)
+	fmt.Println("Type in the factorial to which you want to calculate the digit sum:")
+	fmt.Println("(limit is 1000)")
+	var x int
+	fmt.Scan(&x)
+
+	if x > 1000 {
+		fmt.Println("Required number is too high")
+		fmt.Println("System overload. Emergency shutdown")
+		return
+	}
+
+	primeMapA := primeDecomp(x)
 
 	if primeMapA[2] > primeMapA[5] {
 		primeMapA[2] -= primeMapA[5]
