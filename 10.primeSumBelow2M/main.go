@@ -4,7 +4,7 @@ import "fmt"
 
 func main() { //testing the function for all below 1000 first
 
-	primeList := make([]int, 2, 400000) //initialize first 5 primes
+	primeList := make([]int, 2, 400000) //initialize first 2 primes
 	primeList[0] = 2
 	primeList[1] = 3
 
