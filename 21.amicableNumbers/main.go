@@ -6,8 +6,7 @@ func main() {
 	fmt.Println("Hello World")
 	var primeList []int
 	primeList = setPrimeList()
-	fmt.Println(primeList)
-	sumDiv(1567, primeList)
+	sumDiv(4856, primeList)
 	return
 }
 
@@ -17,19 +16,20 @@ func sumDiv(a int, primeList []int) {
 		primeMap[primeList[i]] = 0 //initialise prime entries in the map
 	} //now all the primes have a counter in the map set to zero
 	//now to decompose a in primal terms
-	for i := 0; i <= a; i++ { //for each factor
-		j := i //set an alias
-		var t int
-		for j != 1 { //for each prime divider, as long as alias != 1
-			if j%primeList[t] == 0 { //if prime is a divider
-				primeMap[primeList[t]]++ //increment counter in the map
-				j = j / primeList[t]     //divide the alias
-				t = 0                    //reevaluate if t > 1, reinitialise factors
-			} else {
-				t++ //else next t
-			} //incremented all the t for the alias
-		} //until we get to t = 1
-	} //increment i, until we get to the last term of factorial
+	i, t := a, 0
+	for i != 1 { //for each prime divider, as long as alias != 1
+		if i%primeList[t] == 0 { //if prime is a divider
+			primeMap[primeList[t]]++ //increment counter in the map
+			i = i / primeList[t]     //divide the alias
+		} else {
+			t++ //else next t
+		} //incremented all the t for the alias
+	} //until we get to t = 1
+	for i := range primeMap {
+		if primeMap[i] == 0 {
+			delete(primeMap, i)
+		}
+	}
 	fmt.Println(primeMap)
 	return
 }
