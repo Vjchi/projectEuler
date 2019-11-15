@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math"
+)
 
 type primeFac struct {
 	prime int
@@ -41,7 +44,19 @@ func sumDiv(a int, primeList []int) {
 		divLenght = divLenght * (primeFacList[i].exp + 1)
 	}
 	fmt.Println(divLenght)
-	//var countList []int = make([]int, divLenght)
+	var countList []int = make([]int, divLenght)
+
+	for i := range primeFacList {
+		var set int = 1
+		var pos = 0
+		for j := i; j < len(primeFacList); j++ {
+			set = set * (primeFacList[i].exp + 1)
+		}
+		for k := 0; k < divLenght/set; k++ {
+			countList[pos] = int(float64(countList[pos]) * math.Pow(float64(primeFacList[i].prime), float64(primeFacList[i].exp)))
+		}
+	}
+	fmt.Println(countList)
 	return
 }
 
