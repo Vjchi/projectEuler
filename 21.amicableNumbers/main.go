@@ -22,12 +22,11 @@ func sumDiv(a int, primeList []int) {
 	i, t := a, 0
 
 	for i != 1 { //for each prime divider, as long as alias != 1
-		if i%primeList[t] == 0 { //if prime is a divider
-			primeFacList = append(primeFacList, primeFac{primeList[t], 1})
-			i = i / primeList[t] //divide the alias
-
+		if i%primeList[t] == 0 { //as long as prime is a divider
+			primeFacList = append(primeFacList, primeFac{primeList[t], 1}) //initialize the prime counter
+			i = i / primeList[t]                                           //divide the alias
 			for i%primeList[t] == 0 {
-				primeFacList[t].exp++ //issue here with the index
+				primeFacList[len(primeFacList)-1].exp++
 				i = i / primeList[t]
 			}
 		} else {
