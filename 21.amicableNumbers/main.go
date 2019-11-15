@@ -20,12 +20,14 @@ func main() {
 func sumDiv(a int, primeList []int) {
 	var primeFacList = make([]primeFac, 0, len(primeList)) //create slice
 	i, t := a, 0
+
 	for i != 1 { //for each prime divider, as long as alias != 1
 		if i%primeList[t] == 0 { //if prime is a divider
 			primeFacList = append(primeFacList, primeFac{primeList[t], 1})
 			i = i / primeList[t] //divide the alias
+
 			for i%primeList[t] == 0 {
-				primeFacList[t].exp++
+				primeFacList[t].exp++ //issue here with the index
 				i = i / primeList[t]
 			}
 		} else {
@@ -57,13 +59,6 @@ func setPrimeList(a int) []int {
 			}
 		}
 	} //All primes below 5000 are now in the slice primeList
-	return primeList
-}
 
-func setnumList(a int) []int {
-	var list []int = make([]int, a)
-	for i := range list {
-		list[i] = i + 1
-	}
-	return list
+	return primeList
 }
