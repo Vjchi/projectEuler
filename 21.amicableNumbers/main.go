@@ -3,10 +3,16 @@ package main
 import "fmt"
 
 func main() {
-	fmt.Println("Hello World")
+	var numList []int
 	var primeList []int
-	primeList = setPrimeList()
-	sumDiv(4856, primeList)
+	fmt.Println("Enter the lenght you'd like to studuy:")
+	var x int
+	fmt.Scan(&x)
+	numList = setnumList(x)
+	primeList = setPrimeList(x)
+	sumDiv(x, primeList)
+	fmt.Println(primeList)
+	fmt.Println(numList)
 	return
 }
 
@@ -34,12 +40,13 @@ func sumDiv(a int, primeList []int) {
 	return
 }
 
-func setPrimeList() []int {
-	primeList := make([]int, 2, 2500) //initialize first 2 primes, enough place for 2500 prime
+func setPrimeList(a int) []int {
+	var expLen = (a / 2) + 1
+	primeList := make([]int, 2, expLen) //initialize first 2 primes, enough place for 2500 prime
 	primeList[0] = 2
 	primeList[1] = 3
 	var x int = 5 //set x to start at next odd after last prime
-	for x < 5000 {
+	for x < a {
 		for i := 1; i < len(primeList); i++ { // testing each candidate x, starting by dividing by 1st prime
 			if x%primeList[i] == 0 { //factor found
 				x += 2 //next odd x
@@ -55,4 +62,12 @@ func setPrimeList() []int {
 		}
 	} //All primes below 5000 are now in the slice primeList
 	return primeList
+}
+
+func setnumList(a int) []int {
+	var list []int = make([]int, a)
+	for i := range list {
+		list[i] = i + 1
+	}
+	return list
 }
