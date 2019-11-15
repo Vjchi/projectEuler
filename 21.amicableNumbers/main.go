@@ -33,7 +33,15 @@ func sumDiv(a int, primeList []int) {
 			t++ //else next t
 		}
 	} //until we get to t = 1
+	//primeFacList now holds all the prime divisors and their factors
 	fmt.Println(primeFacList)
+
+	divLenght := 1
+	for i := range primeFacList {
+		divLenght = divLenght * (primeFacList[i].exp + 1)
+	}
+	fmt.Println(divLenght)
+	//var countList []int = make([]int, divLenght)
 	return
 }
 
