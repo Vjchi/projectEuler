@@ -2,50 +2,46 @@ package main
 
 import "fmt"
 
+type primeFac struct {
+	prime int
+	exp   int
+}
+
 func main() {
-	var numList []int
-	var primeList []int
-	fmt.Println("Enter the lenght you'd like to studuy:")
-	var x int
-	fmt.Scan(&x)
-	numList = setnumList(x)
-	primeList = setPrimeList(x)
+	var primeList []int //Set primeList variable
+	fmt.Println("Enter the lenght you'd like to study:")
+	var x int                   //set variable to study
+	fmt.Scan(&x)                //Get variable from user
+	primeList = setPrimeList(x) //create prime List from variable
 	sumDiv(x, primeList)
-	fmt.Println(primeList)
-	fmt.Println(numList)
 	return
 }
 
 func sumDiv(a int, primeList []int) {
-	var primeMap = make(map[int]int) //create map
-	for i := range primeList {       //for all the primes identified in primeList
-		primeMap[primeList[i]] = 0 //initialise prime entries in the map
-	} //now all the primes have a counter in the map set to zero
-	//now to decompose a in primal terms
+	var primeFacList = make([]primeFac, 0, len(primeList)) //create slice
 	i, t := a, 0
 	for i != 1 { //for each prime divider, as long as alias != 1
 		if i%primeList[t] == 0 { //if prime is a divider
-			primeMap[primeList[t]]++ //increment counter in the map
-			i = i / primeList[t]     //divide the alias
+			primeFacList = append(primeFacList, primeFac{primeList[t], 1})
+			i = i / primeList[t] //divide the alias
+			for i%primeList[t] == 0 {
+				primeFacList[t].exp++
+				i = i / primeList[t]
+			}
 		} else {
 			t++ //else next t
-		} //incremented all the t for the alias
-	} //until we get to t = 1
-	for i := range primeMap {
-		if primeMap[i] == 0 {
-			delete(primeMap, i)
 		}
-	}
-	fmt.Println(primeMap)
+	} //until we get to t = 1
+	fmt.Println(primeFacList)
 	return
 }
 
 func setPrimeList(a int) []int {
 	var expLen = (a / 2) + 1
-	primeList := make([]int, 2, expLen) //initialize first 2 primes, enough place for 2500 prime
-	primeList[0] = 2
-	primeList[1] = 3
-	var x int = 5 //set x to start at next odd after last prime
+	primeList := make([]int, 2, expLen) //initialize first 2 primes, enough place for half the amount we study
+	primeList[0] = 2                    //put first prime in
+	primeList[1] = 3                    //put second prime in
+	var x int = 5                       //set x to start at next odd after last prime
 	for x < a {
 		for i := 1; i < len(primeList); i++ { // testing each candidate x, starting by dividing by 1st prime
 			if x%primeList[i] == 0 { //factor found
