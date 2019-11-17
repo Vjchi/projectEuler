@@ -48,23 +48,37 @@ func sumDiv(a int, primeList []int) {
 	for i := range countList {
 		countList[i] = 1 //Inialize the count list
 	}
-	for i := range countList {
-		countList[i] = 1 //Inialize the count list
-		//complete the first line of the slice
-		countList[i] = math.Pow(float64(primeFacList[0].prime), float64(i/(divLenght/(primeFacList[0].exp+1))))
-	}
-	var set1 = primeFacList[0].exp + 1
-	//now enter the rest
-	for i := 1; i < len(primeFacList); i++ {
-		set1 = set1 * (primeFacList[i].exp + 1)
-		for j := range countList {
-			countList[j] = countList[j] * math.Pow(float64(primeFacList[i].prime), float64((j%(primeFacList[i].exp+1))/(divLenght/set1))) //THIS NEEDS A FIX
-		}
-	}
 
+	//-----------------------------SET FIRST FACTOR
+
+	var set1 = 1
+
+	for i := range countList {
+		countList[i] = math.Pow(float64(primeFacList[0].prime), float64((i % (divLenght / set1) / (divLenght / (primeFacList[0].exp + 1)))))
+	}
+	set1 *= primeFacList[0].exp + 1
 	fmt.Println(countList)
+
+	//---------------------------- COMPLETE THE LIST
+
+	for i := 1; i < len(primeFacList); i++ {
+
+		set1 *= (primeFacList[i].exp + 1)
+		fmt.Println("Set1 is ", set1)
+
+		lscope := divLenght / set1
+
+		for j := range countList {
+			countList[j] *= math.Pow(float64(primeFacList[i].prime), float64((j/lscope)%(primeFacList[i].exp+1)))
+		}
+
+		fmt.Println(countList)
+	}
+	fmt.Println("Final", countList)
 	return
 }
+
+//-----------------------------------------------------
 
 func setPrimeList(a int) []int {
 	var expLen = (a / 2) + 1
