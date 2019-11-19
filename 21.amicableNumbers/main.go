@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"math"
+	"runtime"
+	"sync"
 )
 
 type primeFac struct {
@@ -10,23 +12,62 @@ type primeFac struct {
 	exp   int
 }
 
-func main() {
-	var primeList []int //Set primeList variable
-	var count int
-	primeList = setPrimeList(10000) //create prime List from variable
+//Use as many cores as possible for the goroutines
+func init() {
+	runtime.GOMAXPROCS(2)
+}
 
-	//loop over the calculatiom for the sum of divisors
-	for i := 5; i < 10000; i++ {
+//Add some wait groups to run the goroutines
+var wg sync.WaitGroup
+
+func main() {
+
+	wg.Add(2)           //Add two wait groups
+	var primeList []int //Set primeList variable
+	var countOdd, countEven int
+	primeList = setPrimeList(10000) //create prime List from variable
+	go sumDivOdd(10000, primeList, &countOdd)
+	go sumDivEven(10000, primeList, &countEven)
+	wg.Wait()
+	fmt.Println("count is:", countOdd+countEven)
+	return
+}
+
+func sumDivOdd(a int, primeList []int, countOdd *int) {
+	//loop over the calculatiom for the sum of divisors of ODD num
+	var i = 5
+	for i < 10000 {
 		var a, b int
 		a = sumDiv(i, primeList)
 		b = sumDiv(a, primeList)
 		if i == b && a != i {
-			count += i
+			*countOdd += i
 		}
+		i += 2
 	}
-	fmt.Println("count is:", count)
+	fmt.Println("countOdd is", *countOdd)
+	wg.Done()
 	return
 }
+
+func sumDivEven(a int, primeList []int, countEven *int) {
+	//loop over the calculatiom for the sum of divisors of EVEN num
+	var i = 6
+	for i < 10000 {
+		var a, b int
+		a = sumDiv(i, primeList)
+		b = sumDiv(a, primeList)
+		if i == b && a != i {
+			*countEven += i
+		}
+		i += 2
+	}
+	fmt.Println("countEven is", *countEven)
+	wg.Done()
+	return
+}
+
+//--------------------------------------------------------------------------------------------------------------
 
 func sumDiv(a int, primeList []int) int {
 	//first, cover the out of scope posibilities
