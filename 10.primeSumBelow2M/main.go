@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math"
+)
 
 func main() { //testing the function for all below 1000 first
 
@@ -19,7 +22,7 @@ func main() { //testing the function for all below 1000 first
 				break
 			} else { //if factor not found
 
-				if primeList[i] >= x/3 { //and we are at third, no factor after, this is a Prime
+				if primeList[i] >= int(math.Sqrt(float64(x)))+1 { //and we are at third, no factor after, this is a Prime
 					primeList = append(primeList, x) //add prime to the list
 					x += 2
 					break //next odd x
