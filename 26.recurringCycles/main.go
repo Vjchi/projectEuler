@@ -6,37 +6,43 @@ func main() {
 
 	var result int
 	var longestChain []int
-	longestChain = make([]int, 0, 100)
+	longestChain = make([]int, 0, 1000)
 
-	for i := 1; i < 10; i++ {
+	for i := 2; i < 100; i++ {
 		a := recurringCycle(i)
 		if len(a) > len(longestChain) {
 			longestChain = a
 			result = i
 		}
 	}
-	fmt.Println("The longest recurring cycle is", longestChain, " and happen for d =", result)
+	fmt.Println("The longest recurring cycle is", longestChain, " and happen for d =", result, "and lenght is ", len(longestChain))
 	return
 }
 
 func recurringCycle(a int) []int {
-	var cycle, addedCycle []int
-	cycle = make([]int, 0, 100)
+	var cycle, addedCycle, restCycle []int
+	cycle = make([]int, 0, 105)
+	restCycle = make([]int, 0, 105)
 
-	var rest int
+	var rest int = 0
 	var limit int
 
 	rest, addedCycle = divide(1, a)
 	cycle = append(cycle, addedCycle...)
+	restCycle = append(restCycle, rest)
 
 	for rest != 0 && rest != 1 && limit < 100 {
-
 		rest, addedCycle = divide(rest, a)
 		cycle = append(cycle, addedCycle...)
+
+		for i := range restCycle {
+			if rest == restCycle[i] {
+				limit = 1000 //ca suffit pas, je tombe sur une récurrence irréelle
+			}
+		}
+
 		limit++
-		fmt.Println("Rest is ", rest)
 	}
-	fmt.Println("Test 1 -", a, "-", cycle)
 	return cycle
 }
 
@@ -47,9 +53,12 @@ func divide(num int, div int) (int, []int) {
 
 	result = make([]int, 0, 4)
 
-	for div > num {
-		result = append(result, 0)
-		num *= 10
+	num *= 10
+	if div > num {
+		for div > num {
+			result = append(result, 0)
+			num *= 10
+		}
 	}
 
 	rest = num % div
